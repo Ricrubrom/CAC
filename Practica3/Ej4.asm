@@ -10,20 +10,20 @@ FIN DB ?
   MOV AL, 0
   OUT PIO+3, AL
   IN AL, PIO
-  AND AL, 0FDH
+  AND AL, 0FDH  ;1111 1101, fuerzo strobe a 0
   OUT PIO, AL ; FIN INICIALIZACION
   MOV BX, OFFSET MSJ
   MOV CL, OFFSET FIN-OFFSET MSJ
 POLL: IN AL, PIO
-  AND AL, 1
+  AND AL, 1       ;Pregunto si el bit de busy esta en 1 o 0
   JNZ POLL
   MOV AL, [BX]
   OUT PIO+1, AL
   IN AL, PIO ; PULSO 'STROBE'
-  OR AL, 02H
+  OR AL, 02H ;Fuerzo Strobe a 1
   OUT PIO, AL
   IN AL, PIO
-  AND AL, 0FDH
+  AND AL, 0FDH ;1111 1101, fuerzo Strobe a 0
   OUT PIO, AL ; FIN PULSO
   INC BX
   DEC CL
