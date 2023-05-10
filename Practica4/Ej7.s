@@ -20,17 +20,23 @@ res:    .byte   0
         .byte   0
         .byte   0
 x:      .byte   5
+cant:   .byte   0
 
 
 .code
         lb      r3, x(r0)
         daddi   r5, r0, 0
-        daddi   r4, r0, 10      ;cant
+        daddi   r6, r0, 0
+        daddi   r10, r0, tabla
+        daddi   r11, r0, res
+        dsub    r4, r11, r10
 loop:   beqz    r4, fin
         lb      r1, tabla(r5)
         slt     r2, r3, r1
+        dadd    r6, r6, r2
         sb      r2, res(r5)
-        daddi   r4, r4, -1
+        daddi   r4, r4, -8
         daddi   r5, r5, 8
-        beq     r0, r0, loop
-fin:    halt
+        beqz     r0, loop
+fin:    sb      r6,cant(r0)
+halt
