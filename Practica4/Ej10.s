@@ -4,7 +4,7 @@ car:    .asciiz "d" ; caracter buscado
 cant:   .word   0 ; cantidad de veces que se repite el caracter car en cadena.
 
 .code
-        lb      r1, car(r0)
+        lbu      r1, car(r0)
         dsub    r3, r3, r3
         dsub    r4, r4, r4
 loop:   lbu     r2, cadena(r3)
